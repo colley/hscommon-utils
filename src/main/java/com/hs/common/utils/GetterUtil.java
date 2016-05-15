@@ -5,14 +5,8 @@
  */
 package com.hs.common.utils;
 
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
+import java.lang.reflect.Array;
 import java.text.DateFormat;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +15,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -462,4 +462,17 @@ public final class GetterUtil {
     public static List<Long> getSplit2Long(String codes) {
         return getSplit2Long(codes, ",");
     }
+    
+    public static <T> T[] concat(T[] first, T[] second, Class<T> type) {
+		T[] result = newArray(type, first.length + second.length);
+		System.arraycopy(first, 0, result, 0, first.length);
+		System.arraycopy(second, 0, result, first.length, second.length);
+
+		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T[] newArray(Class<T> type, int length) {
+		return (T[])Array.newInstance(type, length);
+	}
 }
